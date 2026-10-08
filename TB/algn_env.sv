@@ -13,6 +13,9 @@ class algn_env extends uvm_env;
   
   algn_virtual_sequencer algn_vseqrh;
   
+  algn_scoreboard sb_h;
+  algn_coverage cov_h;
+  
   function new(string name = "algn_name", uvm_component parent);
     super.new(name,parent);
   endfunction
@@ -26,12 +29,22 @@ class algn_env extends uvm_env;
     tx_agth = md_tx_agent#(DATA_WIDTH) :: type_id :: create("tx_agth",this);
     
     algn_vseqrh = algn_virtual_sequencer :: type_id :: create("algn_vseqrh",this);
+    
+    sb_h = algn_scoreboard :: type_id :: create("sb_h",this);
+    cov_h = algn_coverage :: type_id :: create("cov_h",this);
+    
   endfunction
   
   function void connect_phase(uvm_phase phase);
     algn_vseqrh.apb_seqrh = apb_agth.p_seqrh ;
     algn_vseqrh.md_rx_seqrh = rx_agth.rx_seqrh ;
     algn_vseqrh.md_tx_seqrh = tx_agth.tx_seqrh ;
+    
+    apb_agth.p_monh.analysis_port.connect(sb_h.apb_fifo.analysis_export);
+    rx_agth.rx_monh.analysis_port.connect(sb_h.rx_fifo.analysis_export);
+    tx_agth.tx_monh.analysis_port.connect(sb_h.tx_fifo.analysis_export);
+    
+    rx_agth.rx_monh.analysis_port.connect(cov_h.analysis_export);
   endfunction
 endclass
 
