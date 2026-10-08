@@ -8,8 +8,11 @@ class md_rx_monitor extends uvm_monitor;
   md_rx_agent_config#(DATA_WIDTH) rx_agt_cfg;
   md_rx_xtn xtn;
   
+  uvm_analysis_port #(md_rx_xtn)analysis_port;
+  
   function new(string name = "md_rx_monitor",uvm_component parent);
     super.new(name,parent);
+    analysis_port = new("analysis_port",this);
   endfunction
   
   function void build_phase(uvm_phase phase);
@@ -26,6 +29,8 @@ class md_rx_monitor extends uvm_monitor;
   forever
    begin
      collect_data();
+     `uvm_info("RX_MON",$sformatf("DATA=%h SIZE=%0d OFFSET=%0d TIME=%0t",xtn.data,xtn.size,xtn.offset,$time),UVM_NONE)
+     analysis_port.write(xtn);
    end
   endtask
   
@@ -43,6 +48,7 @@ class md_rx_monitor extends uvm_monitor;
    xtn.ready = md_vif.ready;
    xtn.err = md_vif.err;
    @(posedge md_vif.clk);
+   wait(!(md_vif.valid && md_vif.ready));
    
    `uvm_info ("MD_RX_MONITOR",$sformatf("printing from MD_RX_MONITOR \n %s",xtn.sprint()),UVM_HIGH)
    
