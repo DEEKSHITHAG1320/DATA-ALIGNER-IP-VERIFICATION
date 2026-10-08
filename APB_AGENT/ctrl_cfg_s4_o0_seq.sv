@@ -15,7 +15,7 @@ class ctrl_cfg_s4_o0_seq extends apb_base_seq;
     
     req.pwrite = 1;
     req.paddr = 16'h0000;
-    req.pwdata = 32'h00000004;
+    req.pwdata = 32'h00000004;//size = 4 and offset = 0
     
     finish_item(req);
   endtask

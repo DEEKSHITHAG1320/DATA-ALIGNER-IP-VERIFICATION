@@ -13,10 +13,10 @@ class ctrl_cfg_s2_o0_seq extends apb_base_seq;
     
     start_item(req);
     
-    req.pwrite = 1;
+    req.pwrite = 1'b1;
     req.paddr = 16'h0000;
-    req.pwdata = 32'h00000002;
-    
+    req.pwdata = 32'h00000002; //size = 2 and offset = 0
+   
     finish_item(req);
   endtask
   
