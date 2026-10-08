@@ -14,7 +14,6 @@ import uvm_pkg::*;
 `include "apb_sequencer.sv"
 `include "apb_monitor.sv"
 `include "apb_driver.sv"
-`include "apb_coverage.sv"
 
 `include "apb_agent.sv"
 
@@ -45,7 +44,11 @@ import uvm_pkg::*;
 `include "irq_reserved_seq.sv"
 
 `include "ctrl_cfg_s1_o0_seq.sv"
+`include "ctrl_cfg_s1_o1_seq.sv"
+`include "ctrl_cfg_s1_o2_seq.sv"
+`include "ctrl_cfg_s1_o3_seq.sv"
 `include "ctrl_cfg_s2_o0_seq.sv"
+`include "ctrl_cfg_s2_o2_seq.sv"
 `include "ctrl_cfg_s4_o0_seq.sv"
 
 `include "irqen_rx_full_enable_seq.sv"
