@@ -8,8 +8,11 @@ class md_tx_monitor extends uvm_monitor;
   md_tx_agent_config#(DATA_WIDTH) tx_agt_cfg;
   md_tx_xtn xtn;
   
+  uvm_analysis_port #(md_tx_xtn) analysis_port;
+  
   function new(string name = "md_tx_monitor", uvm_component parent);
     super.new(name,parent);
+    analysis_port = new("analysis_port",this);
   endfunction
   
   function void build_phase(uvm_phase phase);
@@ -27,6 +30,8 @@ class md_tx_monitor extends uvm_monitor;
     forever
       begin
         collect_data();
+        `uvm_info("TX_MON",$sformatf("DATA=%h SIZE=%0d OFFSET=%0d TIME=%0t",xtn.data,xtn.size,xtn.offset,$time),UVM_NONE)
+        analysis_port.write(xtn);
       end
   endtask
   
@@ -44,6 +49,7 @@ class md_tx_monitor extends uvm_monitor;
     xtn.err = md_vif.err;
 
     @(posedge md_vif.clk);
+    wait(!(md_vif.valid && md_vif.ready));
      
     `uvm_info ("MD_TX_MONITOR",$sformatf("printing from MD_TX_MONITOR \n %s",xtn.sprint()),UVM_HIGH)
     endtask
