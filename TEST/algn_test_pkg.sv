@@ -34,6 +34,7 @@ import md_pkg::*;
 `include "algn_test_tx_fifo_full_irq.sv"
 `include "algn_test_tx_fifo_empty_irq.sv"
 `include "algn_test_multiple_interrupts.sv"
+`include "algn_test_cov.sv"
 endpackage
 
 `endif
