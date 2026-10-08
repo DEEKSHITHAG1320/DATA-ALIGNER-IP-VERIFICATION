@@ -17,6 +17,9 @@ import md_pkg::*;
 `include "algn_virtual_sequencer.sv"
 `include "algn_virtual_base_sequence.sv"
 
+`include "algn_scoreboard.sv"
+`include "algn_coverage.sv"
+
 `include "algn_env.sv"
 
 `include "ctrl_clr_zero_seq.sv"
@@ -55,6 +58,8 @@ import md_pkg::*;
 `include "tx_fifo_empty_irq_vseq.sv"
 
 `include "multiple_interrupts_vseq.sv"
+
+`include "algn_cov_vseq.sv"
 endpackage
 
 `endif
